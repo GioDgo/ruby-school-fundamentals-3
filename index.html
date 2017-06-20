@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Ruby Fundamentals</title>
+  <title>Ruby - Objectos, Clases, Módulos y Mixins</title>
   <style>
     @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
     @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
@@ -86,7 +86,7 @@ class: center, middle
 Lenguaje Ruby y el Paradigma Orientado a Objetos
 ---
 
-# Objectos
+# Objetos
 Como lo hemos estado diciendo, todo lo que manipulamos en Ruby es un objeto
 pero... qué significa eso?
 
@@ -174,7 +174,6 @@ Pero... de donde demonios vienen!?
 ---
 
 # Clases
-
 Una clase es un plano (blueprint) o plantilla para construir un tipo específico de objeto.
 
 - Cada objeto es construido de una clase.
@@ -190,292 +189,356 @@ Debido a que cada clase es diseñada bajo este principio, muchas clases son util
 ```ruby
 class Persona
 
+
 end
 ```
 
 ---
 
-# Arrays (Arreglos)
-Agregar elementos al arreglo.
-
-```ruby
-> array = ["First element", 2, :true]
-=> ["First element", 2, :true]
-
-> array << :hello
-=> ["First element", 2, :true, :hello]
-
-array[4] = "long array"
-=> "long array"
-
-> array
-=> ["First element", 2, :true, :hello, "long array"]
-```
-
----
-
-# Arrays (Arreglos)
-
-Iterar arreglos con `each`.
-```ruby
-> list = ['Laura', 'Ever', 'Jose', 'Adriana']
-
-> list.each do |name|
-    puts "El nombre es #{name}"
-  end
-
-El nombre es Laura
-El nombre es Ever
-El nombre es Jose
-El nombre es Adriana
-=> ["Laura", "Ever", "Jose", "Adriana"]
-```
-
-???
-
-Para poder iterar vamos a llamar un método y vamos a abrir un bloque de codigo.
-Aun no vemos bien los bloques de código pero después llegaremos a ellos.
-
-Vamos a colocar una variable que va a cambiar dependiendo del elemento
-que se esté ejecutando, se va a ejecutar el bloque por cada elemento del arreglo.
-
-For es el equivalente y si existe pero rara vez es usado.
-
-Ejemplo con join, multiplicación, sort, sort.reverse
-include?("Name"), first, last y sample
-
----
-
-# Hashes
-Colección de datos - Llave y valor - No importa el orden
-
-```ruby
-> hash = {'key' => 'First element', 2 => :second, doge: ['such', :wow]}
-=> {"key"=>"First element", 2=>:second, :doge=>["such", :wow]}
-
-> hash["key"]
-=> "First element"
-
-> hash[2]
-=> :second
-
-> hash[:doge]
-=> ["such", :wow]
-```
-
-???
-Colección de datos - Llave y valor - No importa el orden
-
-Las llaves pueden ser cualquier tipo.
-
-como accederían a un elemento del array dentro del hash?
-
----
-
-# Hashes
-
-Podemos agregar elementos sólo declarando una nueva llave y asignando un valor.
-
-```ruby
-> hash[:burn_them] = 'All'
-=> "All"
-
-> hash
-=> {"key"=>"First element", 2=>:second, :doge=>["such", :wow], :burn_them=>"All"}
-```
-
----
-
-# Hashes
-
-Iterar sobre un hash.
-
-```ruby
-hash = { nombre: 'Ana', edad: 22, ocupacion: 'Ruby dev', nivel: 45.5 }
-=> {:nombre=>"Ana", :edad=>22, :ocupacion=>"Ruby dev", :nivel=>45.5}
-
-hash.each do |key, value|
-  puts "La llave #{key} tiene el valor #{value}"
-end
-
-La llave nombre tiene el valor Ana
-La llave edad tiene el valor 22
-La llave ocupacion tiene el valor Ruby dev
-La llave nivel tiene el valor 45.5
-=> {:nombre=>"Ana", :edad=>22, :ocupacion=>"Ruby dev", :nivel=>45.5}
-```
-
-???
-En vez de sólo una variable, va a haber dos, porque se envían dos argumentos al
-bloque en vez de uno. (Dos valores)
-
-Ejemplo con .has_key?, .keys, .values, .delete, empty?
-
----
-
-# Symbols
-
-Cadena inmutable. Ocupa el mismo espacio en memoria.
-
-`:hi_im_a_symbol`
-
-Beneficios:
-  - Performance:
-  Si declaras el mismo string dos veces, se crean dos objetos y apuntan a objetos diferentes.
-  Si declaras el mismo simbolo dos veces, es reciclado y apuntan al mismo objeto.
-  - Comparaciones:
-  Ruby compara letra por letra las cadenas.
-  En simbolos, Ruby compara los object ID, si es el mismo, los objetos son iguales.
-
-???
-No son muy comunes en otros leguajes.
-
-Cuando usar simbolos:
-
-1. Cuando no se necesita modificar el string.
-2. Cuando no necesitas darle metodos al string.
-3. Cuando le quieres dar nombres a objetos.
-
----
-
-# Alcances de variables en ruby
-
-```ruby
-meh =          'Soy local, me muero cuando termina mi bloque'
-@alive =       'Soy de instancia, existo en cada copia de la clase, pero no
-                tengo el mismo valor de las demás'
-@@like_a_sir = 'Soy de clase, existo durante todas las instancias de la clase'
-$master =      'Soy global, accesible desde cualquier parte del programa'
-```
-
-???
-Las variables de intancia reinician su valor cada vez que se manda llamar la clase.
-
-Ejemplo: @total
-
----
-
-# Metodos Accesores
+# Clases
 
 ```ruby
 class Persona
-  def initialize(name)
-    @nombre = name
+  # Atributos
+  # Acciones
+end
+```
+
+---
+
+# Clases
+
+```ruby
+class Persona
+  # Atributos
+  attr_reader   :nombre, :fecha_de_nacimiento
+  attr_accessor :genero
+
+  # Acciones
+  def saludar
+    puts "Hola, mi nombre es #{nombre}, mucho gusto!"
+  end
+
+  def obtener_edad_actual
+    # Cálculo super complejo desarrollado por la NASA...
+  end
+
+  def obtener_paga
+    # <Inserte estrofa de rap de Mc Dinero aquí>
   end
 end
-
-ana = Persona.new("Ana Lucia")
-andrei = Persona.new("El Helo")
 ```
 
-Las variables de instancia no pueden ser modificadas u observadas desde fuera
-del objeto.
-
-???
-crear metodo decir_nombre e imprimir desde el con:
-ana.decir_nombre
-
-Los metodos accesores deciden como podemos cambiar, leer o asignar una variable.
-
 ---
 
-# Metodos Accesores
-
-Tenemos dos tipos.
-
-*Getter.* Leen propiedades
-
-*Setter.* Permiten escribir en las propiedades.
-
-_Codigo legible y natural_
-
-???
-modificar metodos, quitar get y set.
-
-Se puede pensar que es asignación por el igual pero en relidad se está
-mandando llamar el metodo nombre=
-
----
-
-# Metodos Accesores
-Booooring! Tenemos que escribirlos siempre?
-
-`attr_accesor`
-
-`attr_reader`
-
-`attr_writer`
-
----
-
-# Blocks - Procs - Lambdas
-
-Lo se, wtf...
-
----
-
-# Blocks (Bloques)
-
-**No son objetos...**
-
-Pequeños padacitos de código que pueden ser pasados como argumentos a métodos.
-
-Los delimitan las palabras `do / end` o las llaves `{ }`
-
-Como puede trabajar un método con un bloque?
-
-`yield`
-
-???
-Los pasas como argumento para una función
-
----
-
-# Procs
-
-**Si son objetos!**
-
-Su nombre viene de `procedure`
+# Constructor
 
 ```ruby
-def imprime_pls(&this_is_proc)
-  this_is_proc.call
+class Persona
+  # Accesores aquí...
+
+  def initialize
+
+
+  end
+
+  # Métodos acá...
+end
+```
+
+---
+
+# Constructor
+
+```ruby
+class Persona
+  # Accesores aquí...
+
+  def initialize(nombre, fecha_de_nacimiento)
+    @nombre              = nombre
+    @fecha_de_nacimiento = Date.parse(fecha_de_nacimiento)
+  end
+
+  # Métodos acá...
+end
+```
+
+---
+
+Grandioso genio... y ahora ¿cómo lo utilizo?
+
+![Genious](images/genious.png)
+
+---
+
+# "Instanciando" un objeto
+
+Enviamos los parámetros indicados al constructor.
+
+```ruby
+2.4.0 :001 > x = Person.new('Andrei', '1985-06-26')
+ => #<Persona:0x007f885a06aab0 @nombre="Andrei",
+      @fecha_de_nacimiento=#<Date: 1985-06-26 ((2446243j,0s,0n),+0s,2299161j)>,
+      @ahorro=0>
+```
+
+---
+
+# "Instanciando" un objeto
+
+A través de la variable que contiene al nuevo objeto generado hacemos uso de los
+atributos y acciones.
+
+```ruby
+2.4.0 :002 > x.saludar
+Hola, mi nombre es Andrei, mucho gusto!
+2.4.0 :003 > x.edad
+ => 31
+2.4.0 :004 > x.obtener_paga(1000)
+ => 1000
+2.4.0 :005 > x.obtener_paga(4000)
+ => 5000
+2.4.0 :006 > x.ahorro
+ => 5000
+```
+
+---
+
+Hey! Pero NO jala!
+
+.hide[![Mientes!](images/mientes.jpg)]
+
+---
+
+Hey! Pero NO jala!
+
+![Mientes!](images/mientes.jpg)
+
+---
+
+# load, require y require_relative
+
+---
+
+# load
+
+Permite "cargar" un archivo (librería) al entorno para poder hacer uso de él.
+No lleva un seguimiento sobre si se ha cargado previamente el archivo, por lo que
+es posible "cargarlo" múltiples veces.
+
+```ruby
+2.4.0 :001 > load 'persona.rb'
+ => true
+```
+
+---
+
+# require o require_relative
+
+De igual manera permiten cargar un archivo (librería) al entorno pero a diferencia
+del *load*, estos __si__ llevan el seguimiento sobre si se ha cargado previamente
+el archivo o no, por lo que solamente será cargado la primera vez.
+
+```ruby
+2.4.0 :001 > require './examples/persona'
+ => true
+2.4.0 :002 > require './examples/persona'
+ => false
+```
+
+```ruby
+2.4.0 :001 > require_relative 'persona'
+ => true
+2.4.0 :002 > require_relative 'persona'
+ => false
+```
+
+---
+
+Y ¿qué sucedería si necesitamos hacer uso de una clase más específica?
+
+---
+
+Tendríamos que repetir la definición de los atributos y acciones necesarias en
+esta nueva clase... sigh*
+
+```ruby
+class Empleado
+  attr_reader   :nombre, :fecha_de_nacimiento, :ahorro
+  attr_accessor :genero
+
+  # Y todo el demás mugrero... pero amá! que flojera! (ಥ﹏ಥ)
+end
+```
+
+---
+
+# Herencia
+
+Permite crear una clase más especializada de otra.
+Esta clase es conocida como "subclase" de la original y la original es conocida
+como "superclase" de la subclase.
+También se les conoce como clase padre y clase hija.
+
+---
+
+# Herencia
+
+```ruby
+class Empleado < Persona
+  # Así de simple champ! \o/
 end
 
-imprime_pls { puts "The cake is a lie" }
 ```
-
-???
-Es la manera de convertir blocks a objetos.
-Usado cuando necesitas mas argumentos.
 
 ---
 
-# Lambdas
-
-**También son objetos!**
-
-* Se parecen muchísimo a las funciones. Son como Procs en esteroides,
-de hecho, son un objeto de tipo proc.
-* Se usan muy poco.
-* Son como funciones anonimas.
-* Te permite usar `return`.
-* Verifican que pases el numero correcto de argumentos.
+# Herencia
 
 ```ruby
-proc = Proc.new { puts "Hola Sparrow" }
-lam = lambda { puts "Hola Sparrow" }
-
-proc.class # returns 'Proc'
-lam.class  # returns 'Proc'
+2.4.0 :001 > require_relative 'empleado'
+ => true
+2.4.0 :002 > x = Empleado.new('Andrei', '1985-06-26')
+ => #<Empleado:0x007fd379932ea8 @nombre="Andrei",
+      @fecha_de_nacimiento=#<Date: 1985-06-26 ((2446243j,0s,0n),+0s,2299161j)>,
+      @ahorro=0>
+2.4.0 :003 > x.edad
+ => 31
 ```
-
-???
-Los javascripts lo pueden relacionar con funciones anónimas.
 
 ---
 
-# ¿Preguntas?
+# Vamos a complicar más las cosas porque pues... YOLO!
+
+---
+
+# Herencia
+
+```ruby
+require_relative 'persona'
+
+class Empleado < Persona
+  @@no_de_empleado = 0
+
+  attr_accessor :no_de_empleado
+
+  def initialize(nombre, fecha_de_nacimiento)
+    @@no_de_empleado += 1
+    @no_de_empleado = @@no_de_empleado
+    super(nombre, fecha_de_nacimiento)
+  end
+end
+```
+
+---
+
+# Herencia
+
+```ruby
+2.4.0 :001 > require_relative 'empleado'
+ => true
+2.4.0 :002 > x = Empleado.new('Andrei', '1985-06-26')
+ => #<Empleado:0x007fc88e027868 @no_de_empleado=1,
+      @nombre="Andrei",
+      @fecha_de_nacimiento=#<Date: 1985-06-26 ((2446243j,0s,0n),+0s,2299161j)>,
+      @ahorro=0>
+2.4.0 :003 > y = Empleado.new('Juan', '1990-03-12')
+ => #<Empleado:0x007fc88e1a56e0 @no_de_empleado=2,
+      @nombre="Juan",
+      @fecha_de_nacimiento=#<Date: 1990-03-12 ((2447963j,0s,0n),+0s,2299161j)>,
+      @ahorro=0>
+```
+
+---
+
+# Módulos
+
+Se utilizan comúnmente para "agrupar" métodos, clases o incluso constantes.
+
+Pueden utilizarse como:
+
+- Librerías
+- Mixins
+
+---
+
+# Módulos como Librerías
+
+```ruby
+module​ Trigonometria​
+  PI = 3.141592654
+
+  ​def​ Trigonometria.sin(x)
+   ​# Cosas que yo k se, no soi 100tifiko..​.
+  ​end​
+​
+  ​def​ Trigonometria.cos(x)
+   ​# ..​.
+  ​end​
+​end​
+```
+
+---
+
+# Módulos como Librerías
+
+```ruby
+2.4.0 :001 > require_relative 'trigonometria'
+ => true
+2.4.0 :002 > Trigonometria.sin(2)
+ => 4
+```
+
+---
+
+# Módulos como Mixins
+
+```ruby
+module​ Debug
+  def​ pero_que_es_esto?
+    ​"​#{self.class.name}​ (id: ​#{self.object_id}​): ​#{self.name}​"​
+  ​end​
+​end
+```
+
+---
+
+# Módulos como Mixins
+
+```ruby
+require_relative 'debug'
+require_relative 'persona'
+
+class Empleado < Persona
+  include Debug
+
+  # Constructor, métodos y todo lo que le quieran incluir a su clase
+end
+```
+
+---
+
+# Módulos como Mixins
+
+```ruby
+2.4.0 :001 > require_relative 'empleado'
+ => true
+2.4.0 :002 > x = Empleado.new('Andrei', '1985-06-26')
+ => #<Empleado:0x007fc88e027868 @no_de_empleado=1,
+      @nombre="Andrei",
+      @fecha_de_nacimiento=#<Date: 1985-06-26 ((2446243j,0s,0n),+0s,2299161j)>,
+      @ahorro=0>
+2.4.0 :003 > x.pero_que_es_esto?
+ => "Empleado (id: 70232522069860): ANDREI"
+```
+
+*Nota: Recordemos que en Ruby se pueden incluir signos de interrogación y de
+  exclamación para nombrar métodos pero la convención para los aquellos que
+  incluyan uno de interrogación es que devuelvan un booleano.
+  Este es solo un caso demostrativo y no debería llamarse así. U_U*
+---
+
+# ¿Preguntas? ¿Dudas?
 
     </textarea>
   <script src="js/remark-latest.min.js">
